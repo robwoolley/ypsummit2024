@@ -23,7 +23,7 @@ int loop() {
 }
 
 int main() {
-    hello();
+    loop();
 
     return 0;
 }

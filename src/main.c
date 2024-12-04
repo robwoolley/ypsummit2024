@@ -1,14 +1,19 @@
 #include "mylib.h"
 #include "stdio.h"
+#include <fcntl.h>
+#include <termios.h>
 #include "unistd.h"
 
 int loop() {
-    char c;
-    printf("Press 'q' to quit the infinite loop.\n");
+    int fd, bytes;
+    char c[8];
 
-     while(1) {
-	c = getc(stdin);
-	if (c == 'q') {
+    printf("Press ENTER to continue.\n");
+
+    fcntl(STDIN_FILENO, F_SETFL, fcntl(STDIN_FILENO, F_GETFL) | O_NONBLOCK);
+    while(1) {
+        bytes = read(STDIN_FILENO, &c, sizeof(c));
+        if (bytes > 0) {
             break;
         }
 
